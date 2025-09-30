@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://v8026a7qld4v"]
+
+[ext_resource type="Script" uid="uid://da8cqnr7fdupy" path="res://scripts/goal.gd" id="1_px2g7"]
+[ext_resource type="Shader" uid="uid://vh0gvoea28ee" path="res://resources/goal.gdshader" id="2_wo3oh"]
+[ext_resource type="AudioStream" uid="uid://d1e1tmr8ymqxt" path="res://assets/Collectibles_5.wav" id="3_wo3oh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kiq7l"]
+shader = ExtResource("2_wo3oh")
+shader_parameter/border_width = 0.03
+shader_parameter/feather = 0.02
+shader_parameter/glow_strength = 2.0
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/fitted = 0.0
+shader_parameter/fitted_color = Color(0.2, 1, 0.3, 1)
+shader_parameter/fill_glow_strength = 1.0000000475
+
+[sub_resource type="QuadMesh" id="QuadMesh_hq80a"]
+size = Vector2(34, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqmem"]
+size = Vector2(34, 34)
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_px2g7")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+material = SubResource("ShaderMaterial_kiq7l")
+mesh = SubResource("QuadMesh_hq80a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_rqmem")
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_wo3oh")

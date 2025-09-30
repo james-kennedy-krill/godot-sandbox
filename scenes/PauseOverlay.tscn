@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://wpbwywbptjnf"]
+
+[ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_1ws1g"]
+[ext_resource type="Script" uid="uid://bw4gsfv60fbqp" path="res://scripts/PauseOverlay.gd" id="2_1ws1g"]
+[ext_resource type="Shader" uid="uid://dcmopkrwraji8" path="res://resources/WinOverlay.gdshader" id="3_36bw0"]
+[ext_resource type="AudioStream" uid="uid://b47cvi23t0cof" path="res://assets/Win_3.wav" id="4_lmq2b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sub0x"]
+shader = ExtResource("3_36bw0")
+shader_parameter/center_px = Vector2(0, 0)
+shader_parameter/radius = 0.0
+shader_parameter/feather = 12.0
+shader_parameter/wipe_color = Color(1, 1, 1, 1)
+shader_parameter/viewport_size = Vector2(0, 0)
+
+[node name="PauseOverlay" type="CanvasLayer"]
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_1ws1g")
+script = ExtResource("2_1ws1g")
+
+[node name="Flash" type="ColorRect" parent="Root"]
+material = SubResource("ShaderMaterial_sub0x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+
+[node name="UI" type="CenterContainer" parent="Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/UI"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ContinueBtn" type="Button" parent="Root/UI/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="MainMenuBtn" type="Button" parent="Root/UI/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="QuitBtn" type="Button" parent="Root/UI/VBoxContainer"]
+layout_mode = 2
+text = "Save and Quit"
+
+[node name="WinAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_lmq2b")

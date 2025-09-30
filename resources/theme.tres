@@ -1,0 +1,68 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cb4xq5fk16b2u"]
+
+[ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="1_e1x85"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vj6dk"]
+content_margin_left = 40.0
+content_margin_top = 10.0
+content_margin_right = 40.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 12
+border_width_top = 2
+border_width_right = 12
+border_width_bottom = 2
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_110ce"]
+content_margin_left = 40.0
+content_margin_top = 10.0
+content_margin_right = 40.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 12
+border_width_top = 2
+border_width_right = 12
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05tig"]
+content_margin_left = 40.0
+content_margin_top = 10.0
+content_margin_right = 40.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 24
+border_width_top = 2
+border_width_right = 24
+border_width_bottom = 2
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1x85"]
+bg_color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+
+[resource]
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_e1x85")
+Button/styles/focus = SubResource("StyleBoxFlat_vj6dk")
+Button/styles/hover = SubResource("StyleBoxFlat_vj6dk")
+Button/styles/normal = SubResource("StyleBoxFlat_110ce")
+Button/styles/pressed = SubResource("StyleBoxFlat_05tig")
+HBoxContainer/constants/separation = 16
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 64
+Label/fonts/font = ExtResource("1_e1x85")
+Panel/styles/panel = SubResource("StyleBoxFlat_e1x85")
+VBoxContainer/constants/separation = 16

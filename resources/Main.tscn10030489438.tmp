@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://rnnaasqfj6h8"]
+
+[ext_resource type="Script" uid="uid://bvgvlri2jgbx8" path="res://Movement/main.gd" id="1_04j0l"]
+[ext_resource type="PackedScene" uid="uid://v8026a7qld4v" path="res://Movement/goal.tscn" id="2_qk3hg"]
+[ext_resource type="Script" uid="uid://byax7vumi4mef" path="res://Movement/character_grid_movement.gd" id="3_hwpso"]
+[ext_resource type="AudioStream" uid="uid://buxuq2vqgx1n5" path="res://Movement/Blop_2.wav" id="4_hwpso"]
+[ext_resource type="Script" uid="uid://58toj8bifhdy" path="res://Movement/GoalHUD.gd" id="4_qk3hg"]
+[ext_resource type="PackedScene" uid="uid://cc7sn65miu05s" path="res://Movement/WinOverlay.tscn" id="6_lgtut"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6n1ii"]
+size = Vector2(32, 32)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_04j0l")
+goal_scene = ExtResource("2_qk3hg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(640, 480)
+
+[node name="Character" type="CharacterBody2D" parent="."]
+position = Vector2(640, 480)
+collision_mask = 0
+script = ExtResource("3_hwpso")
+
+[node name="Polygon2D" type="Polygon2D" parent="Character"]
+polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+shape = SubResource("RectangleShape2D_6n1ii")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
+stream = ExtResource("4_hwpso")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="GoalHUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_qk3hg")
+
+[node name="WinOverlay" parent="." instance=ExtResource("6_lgtut")]
