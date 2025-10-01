@@ -1,14 +1,9 @@
-extends Control
+extends Label
 class_name Stopwatch
 
 signal started()
 signal stopped(elapsed_ms: int)
 signal reset()
-
-@onready var _label: Label = $VBox/TimeLabel
-@onready var _start_btn: Button = $VBox/Buttons/StartBtn
-@onready var _stop_btn: Button = $VBox/Buttons/StopBtn
-@onready var _reset_btn: Button = $VBox/Buttons/ResetBtn
 
 ## Inspector options
 @export var autostart: bool = false
@@ -35,14 +30,7 @@ var _accum_refresh_ms: int = 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-
 	_update_label(_current_elapsed_ms())
-
-	_start_btn.pressed.connect(start)
-	_stop_btn.pressed.connect(stop)
-	_reset_btn.pressed.connect(reset_timer)
-
-	_start_btn.grab_focus()
 
 	if autostart:
 		start()
@@ -106,4 +94,4 @@ func _current_elapsed_ms() -> int:
 	return _base_elapsed_ms
 
 func _update_label(ms: int) -> void:
-	_label.text = ProgressStore.format_time_ms(ms)
+	text = ProgressStore.format_time_ms(ms)

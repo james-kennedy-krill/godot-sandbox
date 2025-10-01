@@ -3,14 +3,13 @@ extends Node2D
 @export var goal_scene: PackedScene
 @export var grid: int = 32
 @export var half_cell: int = 16
-#@export var cell_size := Vector2(32, 32)
-#@export var grid_origin := Vector2(640.0, 480.0)
-@export var winSound: AudioStream
+
 
 @onready var player: Node2D = $Character
 @onready var win_overlay: Control = $WinOverlay/Root
 @onready var pause_overlay: Control = $PauseOverlay/Root
-@onready var stopwatch: Stopwatch = $UI/Stopwatch
+@onready var stopwatch: Stopwatch = $UI/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Stopwatch
+@onready var best_time_label: Label = $UI/MarginContainer/VBoxContainer/HBoxContainer2/BestTime
 
 
 var rng := RandomNumberGenerator.new()
@@ -19,22 +18,21 @@ var _character_moved := false
 func _ready() -> void:
 	_setup_level()
 	GameState.level_won.connect(func(): 
+		# Stop the stopwatch
 		stopwatch.stop()
+		# get the time
 		var level_time = stopwatch.get_time_ms()
+		# save the time if its the best
 		ProgressStore.set_best_time_if_better(str(GameState.current_level), level_time)
+		# get the best time (saved)
 		var best_time = ProgressStore.get_best_time(str(GameState.current_level))
+		# now reset the stopwatch ad level, and save progress
 		stopwatch.reset_timer()
 		GameState.next_level()
 		GameState.save_progress()
 		win_overlay.level_time = level_time
 		win_overlay.best_time = best_time
 		win_overlay.play_from_world(player.global_position)
-		if winSound:
-			var asp: AudioStreamPlayer = AudioStreamPlayer.new()
-			asp.stream = winSound
-			add_child(asp)
-			asp.play()
-			asp.finished.connect(func(): asp.queue_free())
 	)
 	win_overlay.restart_requested.connect(_setup_level)
 	
@@ -89,6 +87,11 @@ func _setup_level() -> void:
 		
 	# After you compute the final list of spawn cells:
 	GameState.reset_goals(goal_count)  # or goal_count actually placed
+	var all_best_times = ProgressStore.get_all_best_times()
+	print(all_best_times)
+	var level_best_time = ProgressStore.get_best_time(str(GameState.current_level))
+	var best_time_str = ProgressStore.format_time_ms(level_best_time)
+	best_time_label.text = best_time_str
 	
 	
 	

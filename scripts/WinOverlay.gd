@@ -11,6 +11,8 @@ signal restart_requested
 @onready var level_time_label: Label = $UI/VBoxContainer/HBoxContainer/LevelTime
 @onready var best_time_label: Label = $UI/VBoxContainer/HBoxContainer2/BestTime
 
+@export var win_sound: AudioStream
+@export var best_sound: AudioStream
 @export var title_font_size: int = 64
 @export var grow_time: float = 0.25
 @export var feather: float = 12.0
@@ -37,8 +39,27 @@ func _ready() -> void:
 		)
 
 func play_from_world(world_pos: Vector2) -> void:
+	# Set best times text
 	level_time_label.text = ProgressStore.format_time_ms(level_time)
 	best_time_label.text = ProgressStore.format_time_ms(best_time)
+	
+	if level_time <= best_time:
+		level_time_label.add_theme_color_override("font_color", Color.DARK_GREEN)
+		if best_sound:
+			var asp: AudioStreamPlayer = AudioStreamPlayer.new()
+			asp.stream = best_sound
+			add_child(asp)
+			asp.play()
+			asp.finished.connect(func(): asp.queue_free())
+	else:
+		level_time_label.add_theme_color_override("font_color", Color.DARK_RED)
+		if win_sound:
+			var asp: AudioStreamPlayer = AudioStreamPlayer.new()
+			asp.stream = win_sound
+			add_child(asp)
+			asp.play()
+			asp.finished.connect(func(): asp.queue_free())
+	
 	# Convert world → screen (canvas) using the viewport's canvas transform
 	var ct: Transform2D = get_viewport().get_canvas_transform()
 	var screen_pos: Vector2 = ct * world_pos

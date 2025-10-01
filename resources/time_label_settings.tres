@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://crtpigai3wlmf"]
+
+[ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="1_t75tj"]
+
+[resource]
+font = ExtResource("1_t75tj")
+font_color = Color(0.48452926, 1, 0.58383155, 1)

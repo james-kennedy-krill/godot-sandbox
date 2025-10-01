@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cc7sn65miu05s"]
+[gd_scene load_steps=7 format=3 uid="uid://cc7sn65miu05s"]
 
 [ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_l02av"]
 [ext_resource type="Script" uid="uid://co44dq8uo1gl5" path="res://scripts/WinOverlay.gd" id="1_p26wn"]
 [ext_resource type="Shader" uid="uid://dcmopkrwraji8" path="res://resources/WinOverlay.gdshader" id="2_2vjw8"]
 [ext_resource type="AudioStream" uid="uid://b47cvi23t0cof" path="res://assets/Win_3.wav" id="3_sub0x"]
+[ext_resource type="AudioStream" uid="uid://mgfwtt3n8lxi" path="res://assets/Win_2.wav" id="5_qocs4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sub0x"]
 shader = ExtResource("2_2vjw8")
@@ -24,6 +25,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_l02av")
 script = ExtResource("1_p26wn")
+win_sound = ExtResource("3_sub0x")
+best_sound = ExtResource("5_qocs4")
 grow_time = 0.5
 ui_fade_time = 0.45
 
@@ -73,12 +76,13 @@ theme_override_constants/separation = 48
 
 [node name="BestTimeLabel" type="Label" parent="Root/UI/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 32
 text = "Best Time: "
 
 [node name="BestTime" type="Label" parent="Root/UI/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
 text = "00:00:00"
 horizontal_alignment = 2
 
@@ -93,6 +97,3 @@ text = "Main Menu"
 [node name="QuitBtn" type="Button" parent="Root/UI/VBoxContainer"]
 layout_mode = 2
 text = "Save and Quit"
-
-[node name="WinAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_sub0x")

@@ -95,12 +95,10 @@ func next_level() -> void:
 	current_level += 1
 	reset_goals()
 
-func save_progress(time_ms: int = 0) -> void:
+func save_progress() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("progress", "level_goal_count", level_goal_count)
 	cfg.set_value("progress", "current_level", current_level)
-	if not time_ms == 0:
-		cfg.set_value("progress", "level_"+str(current_level), time_ms)
 	cfg.save(SAVE_PATH)
 	
 func load_progress() -> void:

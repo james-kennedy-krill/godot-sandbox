@@ -1,6 +1,6 @@
 extends Node
 
-const CONFIG_PATH: String = "user://progress.cfg"
+const CONFIG_PATH: String = "user://records.cfg"
 const SECTION_LEVELS: String = "levels"
 const SECTION_META: String = "meta"
 const FILE_VERSION: int = 1

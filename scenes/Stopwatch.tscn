@@ -1,34 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6rfmujoc12xs"]
+[gd_scene load_steps=3 format=3 uid="uid://c6rfmujoc12xs"]
 
 [ext_resource type="Script" uid="uid://dyhph7gxov1lm" path="res://scripts/Stopwatch.gd" id="1_uvajf"]
+[ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="2_tr881"]
 
 [node name="Stopwatch" type="Control"]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -50.0
-offset_right = 160.0
-offset_bottom = 50.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_uvajf")
 
 [node name="VBox" type="VBoxContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = -12.0
-offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 10
 
 [node name="TimeLabel" type="Label" parent="VBox"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 48
+theme_override_fonts/font = ExtResource("2_tr881")
+theme_override_font_sizes/font_size = 32
 text = "00:00.00"
 horizontal_alignment = 1
 vertical_alignment = 1

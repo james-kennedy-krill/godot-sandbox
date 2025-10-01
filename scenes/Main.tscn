@@ -1,23 +1,35 @@
-[gd_scene load_steps=12 format=3 uid="uid://rnnaasqfj6h8"]
+[gd_scene load_steps=17 format=3 uid="uid://rnnaasqfj6h8"]
 
 [ext_resource type="Script" uid="uid://bvgvlri2jgbx8" path="res://scripts/main.gd" id="1_04j0l"]
 [ext_resource type="PackedScene" uid="uid://v8026a7qld4v" path="res://scenes/goal.tscn" id="2_qk3hg"]
-[ext_resource type="AudioStream" uid="uid://b47cvi23t0cof" path="res://assets/Win_3.wav" id="3_3wabv"]
 [ext_resource type="Script" uid="uid://byax7vumi4mef" path="res://scripts/character_grid_movement.gd" id="3_hwpso"]
 [ext_resource type="AudioStream" uid="uid://buxuq2vqgx1n5" path="res://assets/Blop_2.wav" id="4_hwpso"]
 [ext_resource type="Script" uid="uid://58toj8bifhdy" path="res://scripts/GoalHUD.gd" id="4_qk3hg"]
 [ext_resource type="PackedScene" uid="uid://cc7sn65miu05s" path="res://scenes/WinOverlay.tscn" id="6_lgtut"]
-[ext_resource type="PackedScene" uid="uid://c6rfmujoc12xs" path="res://scenes/Stopwatch.tscn" id="7_kyn0o"]
+[ext_resource type="Texture2D" uid="uid://c5asa1hxsygfl" path="res://assets/1bit 16px icons part-2.png" id="7_bjd11"]
 [ext_resource type="PackedScene" uid="uid://wpbwywbptjnf" path="res://scenes/PauseOverlay.tscn" id="7_ys44q"]
+[ext_resource type="Script" uid="uid://dyhph7gxov1lm" path="res://scripts/Stopwatch.gd" id="8_bjd11"]
 [ext_resource type="AudioStream" uid="uid://b7het3iknf4b4" path="res://assets/dessert soul.ogg" id="8_iwg0i"]
+[ext_resource type="LabelSettings" uid="uid://crslwp6ygoyyb" path="res://resources/time_large_label_settings.tres" id="8_qmy6f"]
+[ext_resource type="LabelSettings" uid="uid://crtpigai3wlmf" path="res://resources/time_label_settings.tres" id="10_qmy6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6n1ii"]
 size = Vector2(32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmy6f"]
+atlas = ExtResource("7_bjd11")
+region = Rect2(417, 9, 14, 14)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mwfav"]
+load_path = "res://.godot/imported/1bit 16px icons part-2.png-4ee77867f26e8ca0f5a221189b935f75.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3p2gp"]
+atlas = SubResource("CompressedTexture2D_mwfav")
+region = Rect2(251, 321, 8, 15)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_04j0l")
 goal_scene = ExtResource("2_qk3hg")
-winSound = ExtResource("3_3wabv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(640, 480)
@@ -57,17 +69,66 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_qk3hg")
 
-[node name="Stopwatch" parent="UI" instance=ExtResource("7_kyn0o")]
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
 anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -320.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 100.0
+offset_left = -82.0
+offset_bottom = 42.0
 grow_horizontal = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_qmy6f")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 6
+
+[node name="Stopwatch" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "00:00.00"
+label_settings = ExtResource("8_qmy6f")
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_bjd11")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Control" type="Control" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect2" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(8, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_3p2gp")
+
+[node name="BestTime" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48452926, 1, 0.58383155, 1)
+text = "00:00:00"
+label_settings = ExtResource("10_qmy6f")
+horizontal_alignment = 2
 
 [node name="PauseOverlay" parent="." instance=ExtResource("7_ys44q")]
 
