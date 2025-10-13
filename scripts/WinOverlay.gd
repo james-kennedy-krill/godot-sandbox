@@ -40,10 +40,13 @@ func _ready() -> void:
 
 func play_from_world(world_pos: Vector2) -> void:
 	# Set best times text
-	level_time_label.text = ProgressStore.format_time_ms(level_time)
-	best_time_label.text = ProgressStore.format_time_ms(best_time)
+	level_time_label.text = Stopwatch.format_time_ms(level_time)
+	best_time_label.text = Stopwatch.format_time_ms(best_time)
 	
-	if level_time <= best_time:
+	GameState.next_level()
+	ProgressStore.save_progress(GameState.current_level)
+	
+	if level_time <= best_time or best_time == 0:
 		level_time_label.add_theme_color_override("font_color", Color.DARK_GREEN)
 		if best_sound:
 			var asp: AudioStreamPlayer = AudioStreamPlayer.new()

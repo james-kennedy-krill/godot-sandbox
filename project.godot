@@ -11,20 +11,26 @@ config_version=5
 [application]
 
 config/name="Collect The Squares"
-run/main_scene="uid://dqfve5xttpiy7"
+run/main_scene="uid://bq4enuytclbcc"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://scripts/GameState.gd"
-SceneManager="*res://scripts/SceneManager.gd"
-ProgressStore="*res://scripts/ProgressStore.gd"
+Stopwatch="*res://scripts/singletons/Stopwatch.gd"
+GameState="*res://scripts/singletons/GameState.gd"
+SceneManager="*res://scripts/singletons/SceneManager.gd"
+SupabaseAuth="*res://scripts/singletons/SupabaseAuth.gd"
+ProgressStore="*res://scripts/singletons/ProgressStore.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=960
+window/size/resizable=false
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+window/dpi/allow_hidpi=false
 
 [input]
 
@@ -74,3 +80,9 @@ pause={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="goal"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

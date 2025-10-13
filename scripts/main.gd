@@ -3,75 +3,118 @@ extends Node2D
 @export var goal_scene: PackedScene
 @export var grid: int = 32
 @export var half_cell: int = 16
-
+@export var TOP_MARGIN: int = 120      # pixels to skip from top
+@export var BOTTOM_MARGIN: int = 180   # pixels to skip from bottom
 
 @onready var player: Node2D = $Character
 @onready var win_overlay: Control = $WinOverlay/Root
 @onready var pause_overlay: Control = $PauseOverlay/Root
-@onready var stopwatch: Stopwatch = $UI/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Stopwatch
-@onready var best_time_label: Label = $UI/MarginContainer/VBoxContainer/HBoxContainer2/BestTime
+@onready var stopwatch: Label = %Stopwatch
+@onready var best_time_label: Label = %BestTime
+@onready var clock_instructions: Label = %ClockInstructions
+@onready var initials_label: Label = %InitialsLabel
+@onready var level_name_label: Label = %LevelNameLabel
+@onready var personal_best_label: Label = %PersonalBestLabel
 
+const DEFAULT_TIME_LABEL = "--:--.--"
 
 var rng := RandomNumberGenerator.new()
 var _character_moved := false
+var level_best_time: int
 
 func _ready() -> void:
+	_setup_ui()
 	_setup_level()
 	GameState.level_won.connect(func(): 
 		# Stop the stopwatch
-		stopwatch.stop()
+		Stopwatch.stop()
 		# get the time
-		var level_time = stopwatch.get_time_ms()
+		var level_time = Stopwatch.get_time_ms()
+		await ProgressStore.save_run(GameState.current_level, level_time)
+		
 		# save the time if its the best
-		ProgressStore.set_best_time_if_better(str(GameState.current_level), level_time)
+		#ProgressStore.set_best_time_if_better(str(GameState.current_level), level_time)
+		
 		# get the best time (saved)
-		var best_time = ProgressStore.get_best_time(str(GameState.current_level))
+		#var best_time = ProgressStore.get_best_time(str(GameState.current_level))
+		
+			
 		# now reset the stopwatch ad level, and save progress
-		stopwatch.reset_timer()
-		GameState.next_level()
-		GameState.save_progress()
 		win_overlay.level_time = level_time
-		win_overlay.best_time = best_time
+		win_overlay.best_time = level_best_time
 		win_overlay.play_from_world(player.global_position)
+		clock_instructions.visible = true
 	)
 	win_overlay.restart_requested.connect(_setup_level)
 	
 	GameState.pause.connect(func(): 
-		GameState.save_progress()
+		clock_instructions.visible = true
+		_character_moved = false
+		Stopwatch.stop()
+		ProgressStore.save_progress(GameState.current_level)
 		pause_overlay.play_from_world(player.global_position)
+	)
+	GameState.unpause.connect(func():
+		pause_overlay.unpause()
 	)
 	
 	player.character_moved.connect(func(_pos): 
 		if not _character_moved:
-			stopwatch.start()
+			clock_instructions.visible = false
+			Stopwatch.start()
 			_character_moved = true
 		)
 
 func _setup_level() -> void:
+	personal_best_label.text = "LOADING"
+	best_time_label.text = "LOADING"
 	_character_moved = false
+	Stopwatch.reset_timer()
 	var goal_count: int = GameState.level_goal_count
 	rng.randomize()
 
-	var vp: Vector2 = get_viewport_rect().size  # (1280, 960)
-	# No integer division here: multiply by 0.5 and round to ints.
-	var center: Vector2i = Vector2i(roundi(vp.x * 0.5), roundi(vp.y * 0.5))  # (640, 480)
+	# Viewport + play area
+	var vp: Vector2i = Vector2i(get_viewport_rect().size)  # e.g. (1280,960)
+	var play_top: int = clamp(TOP_MARGIN, 0, vp.y)
+	var play_bottom: int = clamp(vp.y - BOTTOM_MARGIN, 0, vp.y)
+	if play_bottom <= play_top:
+		push_warning("Play area height is <= 0. Adjust TOP_MARGIN/BOTTOM_MARGIN.")
+		return
+	var play_height: int = play_bottom - play_top
 
-	# Do float division explicitly, then floor to int — no “INTEGER_DIVISION” warning.
-	var max_kx: int = floori((float(center.x) - float(half_cell)) / float(grid))
-	var max_ky: int = floori((float(center.y) - float(half_cell)) / float(grid))
+	# Center the grid within the play area vertically; horizontally use full width
+	var center: Vector2i = Vector2i(
+		roundi(vp.x * 0.5),
+		play_top + roundi(float(play_height) * 0.5)
+	)
 
+	# Horizontal radius (symmetric left/right)
+	var max_kx_left: int  = floori((float(center.x) - float(half_cell)) / float(grid))
+	var max_kx_right: int = floori(((float(vp.x) - float(center.x)) - float(half_cell)) / float(grid))
+
+	# Vertical radius (asymmetric: up limited by play_top, down limited by play_bottom)
+	var max_ky_up: int    = floori(((float(center.y) - float(play_top)) - float(half_cell)) / float(grid))
+	var max_ky_down: int  = floori(((float(play_bottom) - float(center.y)) - float(half_cell)) / float(grid))
+
+	# Build all candidate cell offsets inside the play area
 	var offsets: Array[Vector2i] = []
-	for ky in range(-max_ky, max_ky + 1):
-		for kx in range(-max_kx, max_kx + 1):
+	for ky in range(-max_ky_up, max_ky_down + 1):
+		for kx in range(-max_kx_left, max_kx_right + 1):
 			if kx == 0 and ky == 0:
 				continue
 			offsets.append(Vector2i(kx, ky))
 
 	offsets.shuffle()
 
-	var placed := 0
-	var idx := 0
-	while placed < min(goal_count, offsets.size()):
+	var placed: int = 0
+	var idx: int = 0
+	var max_to_place: int = min(goal_count, offsets.size())
+	
+	# (Optional) last-guard: skip any cell that would clip margins due to rounding
+	var min_y: float = float(play_top) + float(half_cell)
+	var max_y: float = float(play_bottom) - float(half_cell)
+
+	while placed < max_to_place and idx < offsets.size():
 		var o: Vector2i = offsets[idx]; idx += 1
 
 		var pos_center := Vector2(
@@ -79,32 +122,44 @@ func _setup_level() -> void:
 			float(center.y) + float(o.y * grid)
 		)
 
+		# Last-guard check (usually redundant with the computed ranges)
+		if pos_center.y < min_y or pos_center.y > max_y:
+			continue
+
 		var inst: Node2D = goal_scene.instantiate() as Node2D
 		inst.position = pos_center
 		add_child(inst)
-
 		placed += 1
+
+	# bookkeeping
+	GameState.reset_goals(placed)  # use placed in case fewer fit than requested
+	level_name_label.text = "Level %d" % GameState.current_level
+	
+	# Fetch best time for level from all users, also gets top 5 times
+	var level_best_times = await ProgressStore.get_level_top5(GameState.current_level)
+	if level_best_times and level_best_times.size() > 0:
+		var best_time: Dictionary = level_best_times[0]
+		level_best_time = best_time.get("best_ms")
+		var best_time_str = Stopwatch.format_time_ms(level_best_time)
+		best_time_label.text = best_time_str
+	else:
+		best_time_label.text = DEFAULT_TIME_LABEL
+		level_best_time = 0
 		
-	# After you compute the final list of spawn cells:
-	GameState.reset_goals(goal_count)  # or goal_count actually placed
-	var all_best_times = ProgressStore.get_all_best_times()
-	print(all_best_times)
-	var level_best_time = ProgressStore.get_best_time(str(GameState.current_level))
-	var best_time_str = ProgressStore.format_time_ms(level_best_time)
-	best_time_label.text = best_time_str
 	
+	# Fetch best time for current authed user
+	var my_best_time = await ProgressStore.get_my_best(GameState.current_level)
+	if my_best_time > 0:
+		var my_best_time_str = Stopwatch.format_time_ms(my_best_time)
+		personal_best_label.text = my_best_time_str
+	else:
+		personal_best_label.text = DEFAULT_TIME_LABEL
+	GameState.start_level()
 	
+func _setup_ui() -> void:
+	win_overlay.get_parent().visible = true
+	pause_overlay.get_parent().visible = true
 	
+	var display_name = SupabaseAuth.get_display_name()
+	initials_label.text = display_name if display_name != "" else "GUEST"
 	
-# If we want to move the square by clicking - seems like cheating
-#func snap_to_grid(world_pos: Vector2) -> Vector2:
-	#var p := world_pos - grid_origin
-	#var cell := Vector2i(floor(p.x / cell_size.x), floor(p.y / cell_size.y))
-	#return Vector2(cell) * cell_size + grid_origin + cell_size * 0.5
-
-
-#func _input(event: InputEvent) -> void:
-	#if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		#var click_position: Vector2 = event.position
-		#var snapped_position := snap_to_grid(click_position)
-		#player.move_character_to(snapped_position)

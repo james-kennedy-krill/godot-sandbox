@@ -36,7 +36,6 @@ grow_vertical = 2
 color = Color(0.7294118, 0.7294118, 0.7294118, 1)
 
 [node name="UI" type="CenterContainer" parent="Root"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,6 +46,12 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Root/UI"]
 layout_mode = 2
 theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Root/UI/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Paused"
+horizontal_alignment = 1
 
 [node name="ContinueBtn" type="Button" parent="Root/UI/VBoxContainer"]
 layout_mode = 2

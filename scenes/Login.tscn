@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4enuytclbcc"]
+
+[ext_resource type="Script" uid="uid://clsbee177dnq3" path="res://scripts/LoginScreen.gd" id="1_1hxp7"]
+[ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_brlkh"]
+[ext_resource type="PackedScene" uid="uid://bwcjx61ada7t3" path="res://scenes/InitialsPicker.tscn" id="3_gpj6k"]
+[ext_resource type="Script" uid="uid://b6cjclqa051yi" path="res://scripts/display_name_container.gd" id="3_p5ycx"]
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_brlkh")
+script = ExtResource("1_1hxp7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SignInContainer" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sign In"
+
+[node name="EmailInput" type="LineEdit" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Email"
+
+[node name="PasswordInput" type="LineEdit" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Password"
+secret = true
+
+[node name="LoginBtn" type="Button" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sign In"
+
+[node name="PlayAsGuestBtn" type="Button" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Play as Guest"
+
+[node name="LogoutBtn" type="Button" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Sign Out"
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/SignInContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="DisplayNameContainer" type="VBoxContainer" parent="CenterContainer"]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+script = ExtResource("3_p5ycx")
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/DisplayNameContainer"]
+layout_mode = 2
+text = "Choose your initials"
+
+[node name="InitialsPicker" parent="CenterContainer/DisplayNameContainer" instance=ExtResource("3_gpj6k")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="SaveBtn" type="Button" parent="CenterContainer/DisplayNameContainer"]
+layout_mode = 2
+text = "Save"
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/DisplayNameContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2

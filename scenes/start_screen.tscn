@@ -40,7 +40,7 @@ text = "Collect the Squares"
 [node name="Control" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HasProgressHBox" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer/Control"]
+[node name="HasProgressHBox" type="VBoxContainer" parent="Panel/CenterContainer/VBoxContainer/Control"]
 layout_mode = 2
 
 [node name="ContinueBtn" type="Button" parent="Panel/CenterContainer/VBoxContainer/Control/HasProgressHBox"]
@@ -55,6 +55,10 @@ text = "Restart"
 visible = false
 layout_mode = 2
 text = "Start"
+
+[node name="SignOutBtn" type="Button" parent="Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sign Out"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hm208")

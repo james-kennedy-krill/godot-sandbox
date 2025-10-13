@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://rnnaasqfj6h8"]
+[gd_scene load_steps=29 format=3 uid="uid://rnnaasqfj6h8"]
 
 [ext_resource type="Script" uid="uid://bvgvlri2jgbx8" path="res://scripts/main.gd" id="1_04j0l"]
 [ext_resource type="PackedScene" uid="uid://v8026a7qld4v" path="res://scenes/goal.tscn" id="2_qk3hg"]
@@ -8,17 +8,89 @@
 [ext_resource type="PackedScene" uid="uid://cc7sn65miu05s" path="res://scenes/WinOverlay.tscn" id="6_lgtut"]
 [ext_resource type="Texture2D" uid="uid://c5asa1hxsygfl" path="res://assets/1bit 16px icons part-2.png" id="7_bjd11"]
 [ext_resource type="PackedScene" uid="uid://wpbwywbptjnf" path="res://scenes/PauseOverlay.tscn" id="7_ys44q"]
-[ext_resource type="Script" uid="uid://dyhph7gxov1lm" path="res://scripts/Stopwatch.gd" id="8_bjd11"]
 [ext_resource type="AudioStream" uid="uid://b7het3iknf4b4" path="res://assets/dessert soul.ogg" id="8_iwg0i"]
 [ext_resource type="LabelSettings" uid="uid://crslwp6ygoyyb" path="res://resources/time_large_label_settings.tres" id="8_qmy6f"]
+[ext_resource type="Script" uid="uid://deiigaqvvdxe3" path="res://scripts/clock.gd" id="9_qmy6f"]
+[ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="10_mwfav"]
 [ext_resource type="LabelSettings" uid="uid://crtpigai3wlmf" path="res://resources/time_label_settings.tres" id="10_qmy6f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6n1ii"]
 size = Vector2(32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmy6f"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qmy6f"]
+radius = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwfav"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvmbd"]
 atlas = ExtResource("7_bjd11")
-region = Rect2(417, 9, 14, 14)
+region = Rect2(249, 464, 30, 38)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ft6cd"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwfav"]
+atlas = ExtResource("7_bjd11")
+region = Rect2(224, 202, 16, 11)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb450"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3p2gp"]
+load_path = "res://.godot/imported/1bit 16px icons part-2.png-4ee77867f26e8ca0f5a221189b935f75.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ft6cd"]
+atlas = SubResource("CompressedTexture2D_3p2gp")
+region = Rect2(441, 177, 14, 13)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfivy"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bb450"]
+load_path = "res://.godot/imported/1bit 16px icons part-2.png-4ee77867f26e8ca0f5a221189b935f75.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfivy"]
+atlas = SubResource("CompressedTexture2D_bb450")
+region = Rect2(251, 344, 10, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmy6f"]
+content_margin_top = 4.0
+content_margin_bottom = 3.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+border_blend = true
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mwfav"]
 load_path = "res://.godot/imported/1bit 16px icons part-2.png-4ee77867f26e8ca0f5a221189b935f75.ctex"
@@ -30,6 +102,8 @@ region = Rect2(251, 321, 8, 15)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_04j0l")
 goal_scene = ExtResource("2_qk3hg")
+TOP_MARGIN = 64
+BOTTOM_MARGIN = 96
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(640, 480)
@@ -47,6 +121,11 @@ shape = SubResource("RectangleShape2D_6n1ii")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Character"]
 stream = ExtResource("4_hwpso")
+
+[node name="Sweep" type="ShapeCast2D" parent="Character"]
+shape = SubResource("CircleShape2D_qmy6f")
+collision_mask = 2
+collide_with_areas = true
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -69,36 +148,143 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_qk3hg")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
+[node name="GameHUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -82.0
-offset_bottom = 42.0
-grow_horizontal = 0
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
+anchor_bottom = 1.0
+offset_top = -64.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 4
+[node name="Background" type="TextureRect" parent="UI/GameHUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
+[node name="PlayerAvatar" type="MarginContainer" parent="UI/GameHUD"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameHUD/PlayerAvatar"]
 layout_mode = 2
-size_flags_horizontal = 4
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mwfav")
+
+[node name="Avatar" type="TextureRect" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="AvatarBackground" type="TextureRect" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_cvmbd")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="InitialsContainer" type="PanelContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ft6cd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/InitialsContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/InitialsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(13, 9)
+layout_mode = 2
 size_flags_vertical = 4
-texture = SubResource("AtlasTexture_qmy6f")
+texture = SubResource("AtlasTexture_mwfav")
+expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="InitialsLabel" type="Label" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/InitialsContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_mwfav")
+theme_override_font_sizes/font_size = 12
+text = "GUEST"
+
+[node name="LevelNameContainer" type="PanelContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bb450")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/LevelNameContainer"]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/LevelNameContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 9)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ft6cd")
+expand_mode = 1
+
+[node name="LevelNameLabel" type="Label" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/LevelNameContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_mwfav")
+theme_override_font_sizes/font_size = 12
+text = "Level 1"
+
+[node name="PersonalBestTimeContainer" type="PanelContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfivy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/PersonalBestTimeContainer"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/PersonalBestTimeContainer/HBoxContainer"]
+custom_minimum_size = Vector2(6, 9)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_nfivy")
+expand_mode = 1
+
+[node name="PersonalBestLabel" type="Label" parent="UI/GameHUD/PlayerAvatar/HBoxContainer/VBoxContainer/PersonalBestTimeContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_mwfav")
+theme_override_font_sizes/font_size = 12
+text = "--:--.--"
+
+[node name="Clock" type="CenterContainer" parent="UI/GameHUD"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -15.0
+offset_right = 100.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/GameHUD/Clock"]
 layout_mode = 2
 theme_override_constants/margin_top = 6
 
-[node name="Stopwatch" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="Stopwatch" type="Label" parent="UI/GameHUD/Clock/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
@@ -106,33 +292,70 @@ text = "00:00.00"
 label_settings = ExtResource("8_qmy6f")
 horizontal_alignment = 2
 vertical_alignment = 1
-script = ExtResource("8_bjd11")
+script = ExtResource("9_qmy6f")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+[node name="BestTimes" type="MarginContainer" parent="UI/GameHUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -122.0
+offset_top = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/GameHUD/BestTimes"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qmy6f")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/GameHUD/BestTimes/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
+alignment = 1
 
-[node name="Control" type="Control" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect2" type="TextureRect" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="UI/GameHUD/BestTimes/PanelContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(8, 15)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_3p2gp")
 
-[node name="BestTime" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="BestTime" type="Label" parent="UI/GameHUD/BestTimes/PanelContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.48452926, 1, 0.58383155, 1)
-text = "00:00:00"
+text = "--:--.--"
 label_settings = ExtResource("10_qmy6f")
 horizontal_alignment = 2
 
+[node name="ClockInstructions" type="Label" parent="UI/GameHUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -91.5
+offset_top = -33.0
+offset_right = 91.5
+offset_bottom = -16.999992
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_mwfav")
+theme_override_font_sizes/font_size = 12
+text = "Moving starts the clock"
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="PauseOverlay" parent="." instance=ExtResource("7_ys44q")]
+visible = false
 
 [node name="WinOverlay" parent="." instance=ExtResource("6_lgtut")]
+visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_iwg0i")

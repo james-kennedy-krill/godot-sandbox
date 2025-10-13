@@ -21,7 +21,7 @@ func _ready() -> void:
 	_mat = flash.material as ShaderMaterial
 	if _mat == null:
 		push_warning("WinOverlay: Flash is missing a ShaderMaterial.")
-	continue_btn.pressed.connect(_unpause)
+	continue_btn.pressed.connect(unpause)
 	main_menu_btn.pressed.connect(func(): SceneManager.go_to("res://scenes/start_screen.tscn"))
 	quit_btn.pressed.connect(func(): get_tree().quit())
 
@@ -67,7 +67,8 @@ func play_from_world(world_pos: Vector2) -> void:
 	await tw2.finished
 	continue_btn.grab_focus()
 
-func _unpause() -> void:
+func unpause() -> void:
+	GameState.is_paused = false
 	# 1) Fade the centered UI out (if visible)
 	if ui.visible:
 		var fade_out: Tween = create_tween()

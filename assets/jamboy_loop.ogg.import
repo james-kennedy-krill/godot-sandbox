@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/jamboy_loop.ogg-32af35e6735e3bd4d51c8e6fddee4
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

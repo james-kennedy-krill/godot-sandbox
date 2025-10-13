@@ -42,6 +42,8 @@ func _physics_process(_delta: float) -> void:
 				break
 
 func _trigger_collect(body: Node2D) -> void:
+	if _collected:
+		return                # <-- guard: already counted
 	_collected = true
 	GameState.goal_collected()
 	emit_signal("collected", body)
@@ -127,6 +129,42 @@ func _is_body_fully_inside(body: Node2D) -> bool:
 
 	# Transform body corners into this Area's local space
 	var to_area: Transform2D = global_transform.affine_inverse() * body.global_transform
+	var corners: Array[Vector2] = [
+		Vector2(-half_body.x, -half_body.y),
+		Vector2( half_body.x, -half_body.y),
+		Vector2( half_body.x,  half_body.y),
+		Vector2(-half_body.x,  half_body.y),
+	]
+	for c in corners:
+		var p: Vector2 = to_area * c
+		if absf(p.x) > half_area.x or absf(p.y) > half_area.y:
+			return false
+	return true
+
+# Will the given body fully fit inside this Area if the body were at at_global_pos?
+func will_fit_body_at(body: Node2D, at_global_pos: Vector2) -> bool:
+	var area_cs: CollisionShape2D = $CollisionShape2D
+	if area_cs == null:
+		return false
+	var area_rect: RectangleShape2D = area_cs.shape as RectangleShape2D
+	if area_rect == null:
+		return false
+
+	var body_cs: CollisionShape2D = body.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if body_cs == null:
+		return false
+	var body_rect: RectangleShape2D = body_cs.shape as RectangleShape2D
+	if body_rect == null:
+		return false
+
+	var half_area: Vector2 = area_rect.size * 0.5
+	var half_body: Vector2 = body_rect.size * 0.5
+
+	# Pretend the body is at at_global_pos (keep its basis)
+	var body_xf: Transform2D = body.global_transform
+	body_xf.origin = at_global_pos
+
+	var to_area: Transform2D = global_transform.affine_inverse() * body_xf
 	var corners: Array[Vector2] = [
 		Vector2(-half_body.x, -half_body.y),
 		Vector2( half_body.x, -half_body.y),

@@ -1,9 +1,9 @@
 extends Label
-class_name Stopwatch
 
 signal started()
 signal stopped(elapsed_ms: int)
 signal reset()
+signal update_label(elapsed_ms: int)
 
 ## Inspector options
 @export var autostart: bool = false
@@ -17,7 +17,7 @@ signal reset()
 		_initial_time_ms = max(value, 0)
 		if not _running and _base_elapsed_ms == 0:
 			_base_elapsed_ms = _initial_time_ms
-			_update_label(_base_elapsed_ms)
+			emit_signal("update_label", _base_elapsed_ms)
 
 # backing field for the property
 var _initial_time_ms: int = 0
@@ -30,7 +30,7 @@ var _accum_refresh_ms: int = 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_update_label(_current_elapsed_ms())
+	emit_signal("update_label", _current_elapsed_ms())
 
 	if autostart:
 		start()
@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 	_accum_refresh_ms += int(delta * 1000.0)
 	if _accum_refresh_ms >= update_interval_ms:
 		_accum_refresh_ms = 0
-		_update_label(_current_elapsed_ms())
+		emit_signal("update_label", _current_elapsed_ms())
 
 # ——— Public API ———
 
@@ -58,14 +58,14 @@ func stop() -> void:
 	var now_ms: int = Time.get_ticks_msec()
 	_base_elapsed_ms += now_ms - _last_start_tick_ms
 	_running = false
-	_update_label(_base_elapsed_ms)
+	emit_signal("update_label", _base_elapsed_ms)
 	emit_signal("stopped", _base_elapsed_ms)
 
 func reset_timer() -> void:
 	_running = false
 	_base_elapsed_ms = initial_time_ms
 	_last_start_tick_ms = 0
-	_update_label(_base_elapsed_ms)
+	emit_signal("update_label", _base_elapsed_ms)
 	emit_signal("reset")
 
 func get_time_ms() -> int:
@@ -74,10 +74,10 @@ func get_time_ms() -> int:
 func set_time_ms(ms: int) -> void:
 	_base_elapsed_ms = max(ms, 0)
 	_last_start_tick_ms = Time.get_ticks_msec()
-	_update_label(_current_elapsed_ms())
+	emit_signal("update_label", _current_elapsed_ms())
 
 func get_time_string() -> String:
-	return ProgressStore.format_time_ms(_current_elapsed_ms())
+	return format_time_ms(_current_elapsed_ms())
 
 func to_dict() -> Dictionary:
 	return {"elapsed_ms": get_time_ms()}
@@ -93,5 +93,15 @@ func _current_elapsed_ms() -> int:
 		return _base_elapsed_ms + (Time.get_ticks_msec() - _last_start_tick_ms)
 	return _base_elapsed_ms
 
-func _update_label(ms: int) -> void:
-	text = ProgressStore.format_time_ms(ms)
+func format_time_ms(ms: int) -> String:
+	if ms == 0:
+		return "00:00.00"
+	var total_cs: int = int(ms / 10.0)      # centiseconds
+	var cs: int = total_cs % 100
+	var total_s: int = int(ms / 1000.0)     # seconds
+	var s: int = total_s % 60
+	var m: int = int(total_s / 60.0) % 60
+	var h: int = int(total_s / 3600.0)
+	if h > 0:
+		return "%02d:%02d:%02d.%02d" % [h, m, s, cs]
+	return "%02d:%02d.%02d" % [m, s, cs]

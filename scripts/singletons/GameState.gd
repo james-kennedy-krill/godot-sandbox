@@ -3,6 +3,7 @@ extends Node
 signal goal_progress_changed(total: int, collected: int)
 signal level_won
 signal pause
+signal unpause
 
 const GAME_START_GOAL_COUNT := 3  # the goals at level 1 (start)
 const GAME_START_LEVEL := 1       # the level the game starts at
@@ -13,8 +14,7 @@ var _collected_goals: int = 0     # the total collected goals for this level
 
 var level_goal_count: int = GAME_START_GOAL_COUNT
 var current_level: int = GAME_START_LEVEL
-
-const SAVE_PATH := "user://progress.cfg"
+var is_paused: bool = false
 
 var total_goals: int:
 	get: return _total_goals
@@ -39,10 +39,16 @@ func _has_event(action: String, ev: InputEvent) -> bool:
 
 func _ready() -> void:
 	_ensure_gamepad_actions()
+
 	
 func _input(event: InputEvent) -> void:
 	if event and event.is_action_pressed("pause"):
-		emit_signal("pause")
+		if not is_paused:
+			emit_signal("pause")
+			is_paused = true
+		else:
+			emit_signal("unpause")
+			is_paused = false
 
 # Helper to add a JoypadButton if missing
 func add_btn(action: String, btn: int) -> void:
@@ -81,9 +87,29 @@ func _ensure_gamepad_actions() -> void:
 	add_axis("ui_left", JOY_AXIS_LEFT_X, -1.0)
 	add_axis("ui_right", JOY_AXIS_LEFT_X, 1.0)
 
+func start_level() -> void:
+	await ensure_level(current_level, "Level %d" % current_level)
+	
+# Ensure a level exists and get its row back
+func ensure_level(level_id: int, name: String = "") -> Dictionary:
+	var url := "%s/rest/v1/rpc/ensure_level" % SupabaseAuth.supabase_url
+	var payload := {"p_id": level_id, "p_name": (name if name != "" else null)}
+	var resp := await SupabaseAuth.authed_request(url, HTTPClient.METHOD_POST, payload)
+	# resp.json is a Dictionary (single row) on success
+	if not resp.success:
+		push_warning("Supabase error %s: %s" % [resp.code, resp.text])
+	if resp.success and typeof(resp.json) == TYPE_DICTIONARY:
+		return resp.json
+	return {}
+
 func reset_goals(total: int = level_goal_count) -> void:
 	total_goals = total      # uses setter → emits signal
 	collected_goals = 0      # uses setter → emits signal
+
+func reset_progress() -> void:
+	current_level = GAME_START_LEVEL
+	level_goal_count = GAME_START_GOAL_COUNT
+	reset_goals()
 
 func goal_collected() -> void:
 	collected_goals = _collected_goals + 1
@@ -94,24 +120,10 @@ func next_level() -> void:
 	level_goal_count += LEVEL_GOAL_INCREASE
 	current_level += 1
 	reset_goals()
+	start_level()
 
-func save_progress() -> void:
-	var cfg := ConfigFile.new()
-	cfg.set_value("progress", "level_goal_count", level_goal_count)
-	cfg.set_value("progress", "current_level", current_level)
-	cfg.save(SAVE_PATH)
-	
-func load_progress() -> void:
-	var cfg := ConfigFile.new()
-	if cfg.load(SAVE_PATH) == OK:
-		level_goal_count = cfg.get_value("progress", "level_goal_count", GAME_START_GOAL_COUNT)
-		current_level = cfg.get_value("progress", "current_level", GAME_START_LEVEL)
-		
-func reset_progress() -> void:
-	current_level = 1
-	level_goal_count = GAME_START_GOAL_COUNT
-	reset_goals(GAME_START_GOAL_COUNT)
-		
-func has_progress() -> bool:
-	var cfg := ConfigFile.new()
-	return cfg.load(SAVE_PATH) == OK
+func load_level(level: int) -> void:
+	current_level = level
+	level_goal_count = GAME_START_GOAL_COUNT + ((level*LEVEL_GOAL_INCREASE)-1)
+	reset_goals()
+	start_level()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6rfmujoc12xs"]
 
-[ext_resource type="Script" uid="uid://dyhph7gxov1lm" path="res://scripts/Stopwatch.gd" id="1_uvajf"]
+[ext_resource type="Script" uid="uid://dyhph7gxov1lm" path="res://scripts/singletons/Stopwatch.gd" id="1_uvajf"]
 [ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="2_tr881"]
 
 [node name="Stopwatch" type="Control"]
