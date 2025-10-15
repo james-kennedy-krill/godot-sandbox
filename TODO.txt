@@ -1,0 +1,4 @@
+1. Create Sign Up for new account
+2. Create forgot password view
+3. top times view at level end
+4. view records view (stretch) - add option from main menu

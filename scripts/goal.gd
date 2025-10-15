@@ -23,6 +23,8 @@ var _pending_frees: int = 0  # gate counter; when it reaches 0 we free
 func _ready() -> void:
 	monitoring = true
 	monitorable = true
+	
+	sfx.pitch_scale = GameState.sound_pitch
 
 	# Ensure unique material per instance so color/glow edits don't leak to others
 	var sm: ShaderMaterial = mesh2d.material as ShaderMaterial
@@ -83,6 +85,7 @@ func _trigger_collect(body: Node2D) -> void:
 	if sfx != null and sfx.stream != null:
 		_add_free_gate(1)
 		sfx.stop()
+		sfx.pitch_scale = GameState.sound_pitch
 		sfx.play()
 		sfx.finished.connect(_mark_gate_done)
 

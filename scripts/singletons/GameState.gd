@@ -8,6 +8,7 @@ signal unpause
 const GAME_START_GOAL_COUNT := 3  # the goals at level 1 (start)
 const GAME_START_LEVEL := 1       # the level the game starts at
 const LEVEL_GOAL_INCREASE := 1     # how many more goals to add at each new level
+const INIT_SOUND_PITCH := 0.9
 
 var _total_goals: int = 0         # the total goals for this level
 var _collected_goals: int = 0     # the total collected goals for this level
@@ -15,6 +16,7 @@ var _collected_goals: int = 0     # the total collected goals for this level
 var level_goal_count: int = GAME_START_GOAL_COUNT
 var current_level: int = GAME_START_LEVEL
 var is_paused: bool = false
+var sound_pitch: float = INIT_SOUND_PITCH
 
 var total_goals: int:
 	get: return _total_goals
@@ -111,14 +113,19 @@ func reset_progress() -> void:
 	level_goal_count = GAME_START_GOAL_COUNT
 	reset_goals()
 
+func reset_sound_pitch() -> void:
+	sound_pitch = INIT_SOUND_PITCH
+
 func goal_collected() -> void:
 	collected_goals = _collected_goals + 1
+	sound_pitch = max(1.25, sound_pitch + 0.05)
 	if _collected_goals >= _total_goals and _total_goals > 0:
 		emit_signal("level_won")
 		
 func next_level() -> void:
 	level_goal_count += LEVEL_GOAL_INCREASE
 	current_level += 1
+	reset_sound_pitch()
 	reset_goals()
 	start_level()
 
