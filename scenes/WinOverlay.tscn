@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cc7sn65miu05s"]
+[gd_scene load_steps=10 format=3 uid="uid://cc7sn65miu05s"]
 
 [ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_l02av"]
 [ext_resource type="Script" uid="uid://co44dq8uo1gl5" path="res://scripts/WinOverlay.gd" id="1_p26wn"]
 [ext_resource type="Shader" uid="uid://dcmopkrwraji8" path="res://resources/WinOverlay.gdshader" id="2_2vjw8"]
 [ext_resource type="AudioStream" uid="uid://b47cvi23t0cof" path="res://assets/Win_3.wav" id="3_sub0x"]
 [ext_resource type="AudioStream" uid="uid://mgfwtt3n8lxi" path="res://assets/Win_2.wav" id="5_qocs4"]
+[ext_resource type="PackedScene" uid="uid://bcnf2q8nixq7u" path="res://scenes/time_entry.tscn" id="6_1hcoh"]
+[ext_resource type="Script" uid="uid://doskffdvm2hs5" path="res://scripts/best_times_v_box.gd" id="6_2tmx5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sub0x"]
 shader = ExtResource("2_2vjw8")
@@ -13,6 +15,11 @@ shader_parameter/radius = 0.0
 shader_parameter/feather = 12.0
 shader_parameter/wipe_color = Color(1, 1, 1, 1)
 shader_parameter/viewport_size = Vector2(0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tmx5"]
+draw_center = false
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
 
 [node name="WinOverlay" type="CanvasLayer"]
 
@@ -73,23 +80,17 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "00:00:00"
 horizontal_alignment = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Root/UI/VBoxContainer"]
+[node name="BestTimesVBox" type="VBoxContainer" parent="Root/UI/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 48
+script = ExtResource("6_2tmx5")
+time_entry_scene = ExtResource("6_1hcoh")
 
-[node name="BestTimeLabel" type="Label" parent="Root/UI/VBoxContainer/HBoxContainer2"]
+[node name="BestTimesLabel" type="Label" parent="Root/UI/VBoxContainer/BestTimesVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
-text = "Best Time: "
-
-[node name="BestTime" type="Label" parent="Root/UI/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 32
-text = "00:00:00"
-horizontal_alignment = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2tmx5")
+text = "Best times:"
 
 [node name="RestartBtn" type="Button" parent="Root/UI/VBoxContainer"]
 layout_mode = 2

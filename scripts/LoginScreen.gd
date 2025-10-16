@@ -9,8 +9,8 @@ extends Control
 @onready var logout_btn: Button         = %LogoutBtn
 @onready var status_label: Label        = %StatusLabel
 @onready var title_label: Label         = %TitleLabel
-@onready var display_name_container: VBoxContainer = $CenterContainer/DisplayNameContainer
-@onready var sign_in_container: VBoxContainer = $CenterContainer/SignInContainer
+@onready var display_name_container: VBoxContainer = %DisplayNameContainer
+@onready var sign_in_container: VBoxContainer = %SignInContainer
 
 
 func _ready() -> void:
@@ -57,13 +57,14 @@ func _show_login_ui() -> void:
 # Try to reuse a saved session and continue
 func _attempt_auto_login() -> void:
 	_set_ui_busy(true)
-	var ok := await SupabaseAuth.ensure_fresh_token()
+	var ok := await SupabaseAuth.ensure_session_ready()  # <- instead of ensure_fresh_token()
 	_set_ui_busy(false)
 	if ok:
 		_show_authed_ui()
 		_go_next()
 	else:
 		_show_login_ui()
+
 
 func _on_login_pressed() -> void:
 	var email := email_input.text.strip_edges()

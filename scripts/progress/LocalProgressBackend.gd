@@ -22,6 +22,10 @@ func get_level_top5(level_id: int) -> Array:
 	var best := get_my_best(level_id)
 	return [] if best == -1 else [ { "level_id": level_id, "user_id": "local", "best_ms": best } ]
 
+func get_level_top5_named(level_id: int) -> Array:
+	# Local mode: no global board; synthesize from local best.
+	var best := get_my_best(level_id)
+	return [] if best == -1 else [ { "level_id": level_id, "user_id": "local", "display_name": "YOU", "best_ms": best } ]
 # --- PROGRESS API ---
 
 func save_progress(last_level: int) -> void:

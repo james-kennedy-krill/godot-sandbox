@@ -24,6 +24,12 @@ func get_level_top5(level_id: int) -> Array:
 	var resp := await SupabaseAuth.authed_request(url, HTTPClient.METHOD_GET, null, ["Accept: application/json"])
 	return resp.json if resp.success and typeof(resp.json) == TYPE_ARRAY else []
 
+func get_level_top5_named(level_id: int) -> Array:
+	var url := "%s/rest/v1/level_top5_named?select=level_id,user_id,display_name,best_ms,achieved_at&level_id=eq.%d&order=best_ms.asc,achieved_at.asc" \
+		% [SupabaseAuth.supabase_url, level_id]
+	var resp := await SupabaseAuth.authed_request(url, HTTPClient.METHOD_GET, null, ["Accept: application/json"])
+	return resp.json if resp.success and typeof(resp.json) == TYPE_ARRAY else []
+
 # --- PROGRESS API ---
 
 func save_progress(last_level: int) -> void:

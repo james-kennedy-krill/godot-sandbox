@@ -9,7 +9,9 @@ signal restart_requested
 @onready var main_menu_btn: Button = $UI/VBoxContainer/MainMenuBtn
 @onready var quit_btn: Button = $UI/VBoxContainer/QuitBtn
 @onready var level_time_label: Label = $UI/VBoxContainer/HBoxContainer/LevelTime
-@onready var best_time_label: Label = $UI/VBoxContainer/HBoxContainer2/BestTime
+#@onready var best_time_label: Label = $UI/VBoxContainer/HBoxContainer2/BestTime
+@onready var best_times_v_box: VBoxContainer = $UI/VBoxContainer/BestTimesVBox
+
 
 @export var win_sound: AudioStream
 @export var best_sound: AudioStream
@@ -39,9 +41,10 @@ func _ready() -> void:
 		)
 
 func play_from_world(world_pos: Vector2) -> void:
+	best_times_v_box.fetch_best_times()
 	# Set best times text
 	level_time_label.text = Stopwatch.format_time_ms(level_time)
-	best_time_label.text = Stopwatch.format_time_ms(best_time)
+	#best_time_label.text = Stopwatch.format_time_ms(best_time)
 	
 	GameState.next_level()
 	ProgressStore.save_progress(GameState.current_level)

@@ -1,9 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq4enuytclbcc"]
+[gd_scene load_steps=8 format=3 uid="uid://bq4enuytclbcc"]
 
 [ext_resource type="Script" uid="uid://clsbee177dnq3" path="res://scripts/LoginScreen.gd" id="1_1hxp7"]
 [ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_brlkh"]
 [ext_resource type="PackedScene" uid="uid://bwcjx61ada7t3" path="res://scenes/InitialsPicker.tscn" id="3_gpj6k"]
 [ext_resource type="Script" uid="uid://b6cjclqa051yi" path="res://scripts/display_name_container.gd" id="3_p5ycx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxk4x"]
+bg_color = Color(0, 0.8826584, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbclg"]
+bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5ycx"]
+content_margin_left = 96.0
+content_margin_top = 24.0
+content_margin_right = 96.0
+content_margin_bottom = 12.0
+bg_color = Color(0.10747974, 0.10747974, 0.10747967, 1)
+draw_center = false
+border_color = Color(0.48452926, 1, 0.58383155, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="Login" type="Control"]
 layout_mode = 3
@@ -24,6 +51,97 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 150.0
+offset_bottom = 268.675
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Collect the Squares"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Panel" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yxk4x")
+
+[node name="Panel2" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel3" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel4" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel5" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel6" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel7" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel8" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel9" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel10" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel11" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel12" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel13" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
+[node name="Panel14" type="Panel" parent="CenterContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jbclg")
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -32,70 +150,77 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SignInContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(650, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p5ycx")
+
+[node name="SignInContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/SignInContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Sign In"
 
-[node name="EmailInput" type="LineEdit" parent="CenterContainer/SignInContainer"]
+[node name="EmailInput" type="LineEdit" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Email"
 
-[node name="PasswordInput" type="LineEdit" parent="CenterContainer/SignInContainer"]
+[node name="PasswordInput" type="LineEdit" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Password"
 secret = true
 
-[node name="LoginBtn" type="Button" parent="CenterContainer/SignInContainer"]
+[node name="LoginBtn" type="Button" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Sign In"
 
-[node name="PlayAsGuestBtn" type="Button" parent="CenterContainer/SignInContainer"]
+[node name="PlayAsGuestBtn" type="Button" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Play as Guest"
 
-[node name="LogoutBtn" type="Button" parent="CenterContainer/SignInContainer"]
+[node name="LogoutBtn" type="Button" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "Sign Out"
 
-[node name="StatusLabel" type="Label" parent="CenterContainer/SignInContainer"]
+[node name="StatusLabel" type="Label" parent="CenterContainer/PanelContainer/SignInContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
 
-[node name="DisplayNameContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="DisplayNameContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 script = ExtResource("3_p5ycx")
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/DisplayNameContainer"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/DisplayNameContainer"]
 layout_mode = 2
 text = "Choose your initials"
 
-[node name="InitialsPicker" parent="CenterContainer/DisplayNameContainer" instance=ExtResource("3_gpj6k")]
+[node name="InitialsPicker" parent="CenterContainer/PanelContainer/DisplayNameContainer" instance=ExtResource("3_gpj6k")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="SaveBtn" type="Button" parent="CenterContainer/DisplayNameContainer"]
+[node name="SaveBtn" type="Button" parent="CenterContainer/PanelContainer/DisplayNameContainer"]
 layout_mode = 2
 text = "Save"
 
-[node name="StatusLabel" type="Label" parent="CenterContainer/DisplayNameContainer"]
+[node name="StatusLabel" type="Label" parent="CenterContainer/PanelContainer/DisplayNameContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16

@@ -23,6 +23,9 @@ func get_my_best(level_id: int) -> int:
 
 func get_level_top5(level_id: int) -> Array:
 	return await backend.get_level_top5(level_id)
+	
+func get_level_top5_named(level_id: int) -> Array:
+	return await backend.get_level_top5_named(level_id)
 
 # Optionally call this after explicit login/logout to re-select backend
 func refresh_backend() -> void:

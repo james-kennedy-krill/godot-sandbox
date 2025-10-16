@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cb4xq5fk16b2u"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cb4xq5fk16b2u"]
 
 [ext_resource type="FontFile" uid="uid://clplycwpnvpp0" path="res://assets/PeaberryBase.ttf" id="1_e1x85"]
+[ext_resource type="FontFile" uid="uid://duwqpmr0legmp" path="res://assets/m5x7.ttf" id="2_7ct1h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vj6dk"]
 content_margin_left = 40.0
@@ -50,13 +51,33 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ct1h"]
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.48452926, 1, 0.58383155, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4nwg"]
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-border_width_bottom = 3
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
+bg_color = Color(0.48452926, 1, 0.58383155, 1)
 border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1x85"]
 bg_color = Color(0, 0, 0, 1)
@@ -72,9 +93,18 @@ HBoxContainer/constants/separation = 16
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/font_sizes/font_size = 64
 Label/fonts/font = ExtResource("1_e1x85")
+LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/clear_button_color = Color(0, 0, 0, 1)
+LineEdit/colors/clear_button_color_pressed = Color(0, 0, 0, 1)
 LineEdit/colors/font_color = Color(0, 0, 0, 1)
-LineEdit/colors/font_placeholder_color = Color(0, 0, 0, 0.6)
-LineEdit/colors/font_selected_color = Color(0, 1, 1, 1)
+LineEdit/colors/font_outline_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_placeholder_color = Color(0.34033877, 0.34033957, 0.34033898, 0.85882354)
+LineEdit/colors/font_selected_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_uneditable_color = Color(0.875, 0.875, 0.875, 0.5)
+LineEdit/colors/selection_color = Color(0.5, 0.5, 0.5, 1)
+LineEdit/font_sizes/font_size = 32
+LineEdit/fonts/font = ExtResource("2_7ct1h")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_7ct1h")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_d4nwg")
 Panel/styles/panel = SubResource("StyleBoxFlat_e1x85")
 VBoxContainer/constants/separation = 16

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcnf2q8nixq7u"]
+
+[ext_resource type="Theme" uid="uid://cb4xq5fk16b2u" path="res://resources/theme.tres" id="1_jht8h"]
+[ext_resource type="Script" uid="uid://ctxtd8ftjpied" path="res://scripts/time_entry.gd" id="2_qhcej"]
+
+[node name="TimeEntry" type="HBoxContainer"]
+theme = ExtResource("1_jht8h")
+theme_override_constants/separation = 48
+script = ExtResource("2_qhcej")
+
+[node name="Name" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Best Time: "
+
+[node name="Time" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "00:00:00"
+horizontal_alignment = 2
